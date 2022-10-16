@@ -31,9 +31,3 @@ task managedVersions {
         }
     }
 }
-
-println 'Выполнение задачи grandle - hello.'
-//gradle -q hello
-task hello {
-    println 'Hello world!'
-}
