@@ -23,7 +23,7 @@ allprojects {
         }
     }
 }
-println 'Это выполняется на этапе настройки.'
+
 task managedVersions {
     doLast {
         dependencyManagement.managedVersions.each {
