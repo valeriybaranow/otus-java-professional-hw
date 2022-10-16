@@ -1,15 +1,19 @@
 # Java Developer. Professional
+https://otus.ru/lessons/java-professional/
+# Lessons Example
+https://github.com/petrelevich/otus_java_2022_09
+
+# Студент:
+Baranov Valeriy (Баранов Валерий)
 
 
 ## Урок 1. Подготовка к курсу. ДЗ
-https://otus.ru/lessons/razrabotchik-php/?utm_source=github&utm_medium=free&utm_campaign=otus
 
 ### Домашнее задание
 Проект gradle с модульной структурой
 
 Цель:
 научиться создавать проект Gradle, подготовиться к выполнению домашних заданий.
-
 
 Описание/Пошаговая инструкция выполнения домашнего задания:
 1. Создайте аккаунт на github.com (если еще нет)
