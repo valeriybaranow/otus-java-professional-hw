@@ -3,32 +3,78 @@
  */
 package ru.otus;
 
-import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.*;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**
  *
  * To start the application:
  * ./gradlew build
- * java -jar ./hw01-gradle/build/libs/gradleHelloWorld-0.1.jar
+ * java -jar ./hw01-gradle/build/libs/gradleHelloOtus-0.1.jar
  * <p>
  * To unzip the jar:
  * unzip -l hw01-gradle.jar
- * unzip -l gradleHelloWorld-0.1.jar
+ * unzip -l gradleHelloOtus-0.1.jar
  *
  */
 public class HelloOtus {
     public static void main(String... args) {
-        List<Integer> example = new ArrayList<>();
-        int min = 0;
-        int max = 100;
-        for (int i = min; i < max; i++) {
-            example.add(i);
+        //create a multiset collection
+        Multiset<String> multiset = HashMultiset.create();
+
+        multiset.add("a");
+        multiset.add("b");
+        multiset.add("c");
+        multiset.add("d");
+        multiset.add("a");
+        multiset.add("b");
+        multiset.add("c");
+        multiset.add("b");
+        multiset.add("b");
+        multiset.add("b");
+
+        //print the occurrence of an element
+        System.out.println("Occurrence of 'b' : "+multiset.count("b"));
+
+        //print the total size of the multiset
+        System.out.println("Total Size : "+multiset.size());
+
+        //get the distinct elements of the multiset as set
+        Set<String> set = multiset.elementSet();
+
+        //display the elements of the set
+        System.out.println("Set [");
+
+        for (String s : set) {
+            System.out.println(s);
         }
 
-        System.out.println(Lists.reverse(example));
+        System.out.println("]");
+
+        //display all the elements of the multiset using iterator
+        Iterator<String> iterator  = multiset.iterator();
+        System.out.println("MultiSet [");
+
+        while(iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+
+        System.out.println("]");
+
+        //display the distinct elements of the multiset with their occurrence count
+        System.out.println("MultiSet [");
+
+        for (Multiset.Entry<String> entry : multiset.entrySet()) {
+            System.out.println("Element: " + entry.getElement() + ", Occurrence(s): " + entry.getCount());
+        }
+        System.out.println("]");
+
+        //remove extra occurrences
+        multiset.remove("b",2);
+
+        //print the occurrence of an element
+        System.out.println("Occurence of 'b' : " + multiset.count("b"));
     }
 }
