@@ -1,0 +1,3 @@
+rootProject.name = 'otusJavaHomeWorks'
+println 'Это выполняется на этапе инициализации.'
+include 'hw01-gradle'
