@@ -19,10 +19,12 @@ class ATMTest {
     @BeforeAll
     public static void globalSetUp() throws CashException {
         // 5750 руб.
-        atm5750 = new ATMVersion1();
+        Cells cells5750 = new Cells();
+        atm5750 = new ATMVersion1(cells5750);
         atm5750.putCash(createCash(SUM_CASH_5750));
         // 1000000
-        atm1000000 = new ATMVersion1();
+        Cells cells1000000 = new Cells();
+        atm1000000 = new ATMVersion1(cells1000000);
         atm1000000.putCash(createCash(SUM_CASH_1000000));
     }
 

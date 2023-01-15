@@ -4,7 +4,8 @@ import ru.otus.ATMs.ATMVersion1;
 
 public class Main {
     public static void main(String[] args) throws CashException {
-        ATM atm = new ATMVersion1();
+        Cells cells = new Cells();
+        ATM atm = new ATMVersion1(cells);
         atm.putCash(createCash());
         atm.showCashInCells();
         atm.putCash(createCash());

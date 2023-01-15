@@ -7,24 +7,24 @@ import java.util.Stack;
 import java.util.TreeMap;
 
 public class ATMVersion1 implements ATM {
-    private final TreeMap<Denominations, Stack<Banknote>> cells;
+    private final Cells cells;
 
-    public ATMVersion1() {
-        this.cells = new TreeMap<>();
+    public ATMVersion1(Cells cells) {
+        this.cells = cells;
     }
 
     public void putCash(Cash cash) {
         cash.getBanknotes().forEach((banknote) -> {
             var denomination = banknote.getDenomination();
-            var oldBanknotes = cells.get(denomination);
+            var oldBanknotes = cells.getDenominations(denomination);
             if(oldBanknotes == null) {
                 var newBanknote = new Stack<Banknote>();
                 newBanknote.add(banknote);
-                cells.put(banknote.getDenomination(), newBanknote);
+                cells.addCells(banknote.getDenomination(), newBanknote);
             }
             else {
                 oldBanknotes.add(banknote);
-                cells.put(banknote.getDenomination(), oldBanknotes);
+                cells.addCells(banknote.getDenomination(), oldBanknotes);
             }
         });
         System.out.printf("Наличные общей суммой %d руб. загружены в ячейки банкомата.%n", cash.getSum());
@@ -36,7 +36,7 @@ public class ATMVersion1 implements ATM {
             throw new CashException("В банкомате недостаточно средств. Невозможно снять указанную сумму", sumCash);
         }
         Cash cash = new Cash();
-        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.entrySet()) {
+        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.getCells().entrySet()) {
             int cellCash = cell.getKey().getCash();
             if(sumCash >= cellCash) {
                 int sumBanknotes = sumCash - sumCash%cellCash;
@@ -59,7 +59,7 @@ public class ATMVersion1 implements ATM {
 
     public int getSumCash() {
         int sum = 0;
-        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.entrySet()) {
+        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.getCells().entrySet()) {
             Denominations denomination = cell.getKey();
             Stack<Banknote> banknotes = cell.getValue();
             sum += banknotes.size()*denomination.getCash();
@@ -68,12 +68,12 @@ public class ATMVersion1 implements ATM {
     }
 
     public TreeMap<Denominations, Stack<Banknote>> getCells() {
-        return cells;
+        return cells.getCells();
     }
 
     public void showCashInCells() {
         System.out.println("-------------Наличные в ячейках-------------");
-        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.entrySet()) {
+        for(Map.Entry<Denominations, Stack<Banknote>> cell : cells.getCells().entrySet()) {
             Denominations denomination = cell.getKey();
             Stack<Banknote> banknotes = cell.getValue();
             System.out.printf(
