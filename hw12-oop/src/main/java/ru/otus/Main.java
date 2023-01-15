@@ -17,10 +17,10 @@ public class Main {
 
     private static Cash createCash() {
         Cash cash = new Cash();
-        cash.createBanknotes(Denominations.ONE_THOUSAND, 5);
-        cash.createBanknotes(Denominations.ONE_HUNDRED, 2);
-        cash.createBanknote(Denominations.FIFTY);
-        cash.createBanknote(Denominations.FIVE_HUNDRED);
+        cash.addBanknotes(Denominations.ONE_THOUSAND, 5);
+        cash.addBanknotes(Denominations.ONE_HUNDRED, 2);
+        cash.addBanknote(Denominations.FIFTY);
+        cash.addBanknote(Denominations.FIVE_HUNDRED);
         System.out.printf("Сформирован кэш общей суммой %d руб. %n", cash.getSum());
         return cash;
     }

@@ -1,12 +1,9 @@
 package ru.otus;
 
-import java.util.ArrayList;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 public class Cash {
-    private final ArrayList <Banknote> banknotes;
+    private final List <Banknote> banknotes;
 
     public Cash() {
        this.banknotes = new ArrayList<>();
@@ -16,12 +13,12 @@ public class Cash {
         banknotes.add(banknote);
     }
 
-    public void createBanknote(Denominations destination) {
+    public void addBanknote(Denominations destination) {
         var banknote = new Banknote(destination);
-        banknotes.add(banknote);
+        addBanknote(banknote);
     }
 
-    public void createBanknotes(Denominations destination, int count) {
+    public void addBanknotes(Denominations destination, int count) {
         while(count > 0) {
             var banknote = new Banknote(destination);
             banknotes.add(banknote);
@@ -29,14 +26,12 @@ public class Cash {
         }
     }
 
-    public ArrayList <Banknote> getBanknotes() {
+    public List<Banknote> getBanknotes() {
         return banknotes;
     }
 
     public int getSum() {
-        var sum = new AtomicInteger();
-        banknotes.forEach((banknote) -> sum.addAndGet(banknote.getDenomination().getCash()));
-        return sum.get();
+        return banknotes.stream().mapToInt(banknote -> banknote.getDenomination().getCash()).sum();
     }
 
     int getCountBanknote(Denominations denominations) {

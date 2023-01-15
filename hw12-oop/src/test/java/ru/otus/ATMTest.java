@@ -118,7 +118,7 @@ class ATMTest {
             if (sumCash > 0) {
                 int sumBanknotes = sumCash - sumCash % cellCash;
                 int numBanknotes = sumBanknotes / cellCash;
-                cash.createBanknotes(denominations, numBanknotes);
+                cash.addBanknotes(denominations, numBanknotes);
                 sumCash -= sumBanknotes;
             }
         }
