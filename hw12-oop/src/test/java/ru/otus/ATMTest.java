@@ -2,6 +2,7 @@ package ru.otus;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.otus.ATMs.ATMVersion1;
 
 import java.util.*;
 
@@ -18,10 +19,10 @@ class ATMTest {
     @BeforeAll
     public static void globalSetUp() throws CashException {
         // 5750 руб.
-        atm5750 = new ATM();
+        atm5750 = new ATMVersion1();
         atm5750.putCash(createCash(SUM_CASH_5750));
         // 1000000
-        atm1000000 = new ATM();
+        atm1000000 = new ATMVersion1();
         atm1000000.putCash(createCash(SUM_CASH_1000000));
     }
 

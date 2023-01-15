@@ -33,7 +33,7 @@ public class Cash {
         return banknotes;
     }
 
-    int getSum() {
+    public int getSum() {
         var sum = new AtomicInteger();
         banknotes.forEach((banknote) -> sum.addAndGet(banknote.getDenomination().getCash()));
         return sum.get();
