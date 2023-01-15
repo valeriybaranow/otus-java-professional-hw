@@ -14,19 +14,18 @@ public class ATMVersion1 implements ATM {
     }
 
     public void putCash(Cash cash) {
-        cash.getBanknotes().forEach((banknote) -> {
+        for (Banknote banknote : cash.getBanknotes()) {
             var denomination = banknote.getDenomination();
             var oldBanknotes = cells.getDenominations(denomination);
-            if(oldBanknotes == null) {
+            if (oldBanknotes == null) {
                 var newBanknote = new Stack<Banknote>();
                 newBanknote.add(banknote);
                 cells.addCells(banknote.getDenomination(), newBanknote);
-            }
-            else {
+            } else {
                 oldBanknotes.add(banknote);
                 cells.addCells(banknote.getDenomination(), oldBanknotes);
             }
-        });
+        }
         System.out.printf("Наличные общей суммой %d руб. загружены в ячейки банкомата.%n", cash.getSum());
     }
 
