@@ -20,7 +20,7 @@ public interface ATM {
     int getSumCash();
 
     /**
-     * Вврнуть ячейки банкомата
+     * Вернуть ячейки банкомата
      */
     TreeMap<Denominations, Stack<Banknote>> getCells();
 
