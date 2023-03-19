@@ -1,17 +1,19 @@
 package ru.otus;
 
-public class TestFramework {
+public class ClassTest {
+    @Test
+    public void test1() {
+        System.out.print("Метод: test1 ");
+        System.out.println("Экземпляр тестового класса: " + Integer.toHexString(hashCode()));
+    }
+
     @After
     public void after1() {
         System.out.print("Метод: after1 ");
         System.out.println("Экземпляр тестового класса: " + Integer.toHexString(hashCode()));
     }
 
-    @Test
-    public void test1() {
-        System.out.print("Метод: test1 ");
-        System.out.println("Экземпляр тестового класса: " + Integer.toHexString(hashCode()));
-    }
+
 
     @Before
     public void before1() {

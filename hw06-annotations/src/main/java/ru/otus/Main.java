@@ -2,17 +2,18 @@ package ru.otus;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        runTest(TestFramework.class);
+        runTest(ClassTest.class);
     }
 
-    private static void runTest(Class clazz) {
-        List<ArrayList<Method>> sortedMethods = TestFrameworkHelper.getSortedMethods(clazz);
-        for (ArrayList<Method> object : sortedMethods) {
-            object.forEach((Method method) -> TestFrameworkHelper.callMethod(TestFramework.class, method));
+    private static void runTest(Class<ClassTest> clazz) {
+        TestFrameworkHelper testFrameworkHelper = new TestFrameworkHelper();
+        Map<Class, ArrayList<Method>> sortedMethods = testFrameworkHelper.getSortedMethods(clazz);
+        for (Map.Entry<Class, ArrayList<Method>> sortedMethod: sortedMethods.entrySet()) {
+            sortedMethod.getValue().forEach((Method method) -> testFrameworkHelper.callMethod(ClassTest.class, method));
         }
     }
 }

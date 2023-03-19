@@ -4,17 +4,17 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TestFrameworkHelper {
-
     /**
      * Выполняет метод класса
      */
-    public static void callMethod(Class<TestFramework> testFrameworkClass, Method method, Object... args) {
+    public void callMethod(Class<ClassTest> testFrameworkClass, Method method, Object... args) {
         try {
-            Constructor<TestFramework> constructor = testFrameworkClass.getConstructor();
-            TestFramework object = constructor.newInstance();
+            Constructor<ClassTest> constructor = testFrameworkClass.getConstructor();
+            ClassTest object = constructor.newInstance();
             method.setAccessible(true);
             method.invoke(object, args);
         } catch (Exception e) {
@@ -25,33 +25,31 @@ public class TestFrameworkHelper {
     /**
      * Возвращает методы клавва отсортированные в зависимости от аннотиции метода в следующем порядке </pre>@Before @Test @After
      */
-    public static List<ArrayList<Method>> getSortedMethods(Class testFrameworkClass) {
+    public Map<Class, ArrayList<Method>> getSortedMethods(Class<ClassTest> testFrameworkClass) {
+        Map<Class, ArrayList<Method>> sortedMethods = new LinkedHashMap<>();
+        ArrayList<Method> listBefore = new ArrayList<>();
+        ArrayList<Method> listTest = new ArrayList<>();
+        ArrayList<Method> listAfter = new ArrayList<>();
         try {
-            String packageName = testFrameworkClass.getPackage().getName();
-            List<ArrayList<Method>> sortedMethods = new ArrayList<>();
-            var listBefore = new ArrayList<Method>();
-            var listTest = new ArrayList<Method>();
-            var listAfter = new ArrayList<Method>();
             for (final Method declaredMethod : testFrameworkClass.getDeclaredMethods()) {
-                Annotation[] annotations = declaredMethod.getAnnotations();
-                for(Annotation annotation : annotations) {
-                    if(annotation.toString().equals("@" + packageName + ".Before()")) {
-                        listBefore.add(declaredMethod);
-                    }
-                    if(annotation.toString().equals("@" + packageName + ".Test()")) {
-                        listTest.add(declaredMethod);
-                    }
-                    if(annotation.toString().equals("@" + packageName + ".After()")) {
-                        listAfter.add(declaredMethod);
-                    }
-                }
+                addMethod(declaredMethod, listBefore, Before.class);
+                addMethod(declaredMethod, listTest, Test.class);
+                addMethod(declaredMethod, listAfter, After.class);
             }
-            sortedMethods.add(listBefore);
-            sortedMethods.add(listTest);
-            sortedMethods.add(listAfter);
+            sortedMethods.put(Before.class, listBefore);
+            sortedMethods.put(Test.class, listTest);
+            sortedMethods.put(After.class, listAfter);
             return sortedMethods;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void addMethod(Method declaredMethod, ArrayList<Method> listMethod, Class classAnnotation) {
+        Annotation[] annotations = declaredMethod.getAnnotationsByType(classAnnotation);
+        if(annotations.length > 0) {
+            listMethod.add(declaredMethod);
+        }
+    }
+
 }
